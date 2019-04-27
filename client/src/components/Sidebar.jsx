@@ -19,6 +19,10 @@ const Sidebar = ({ children }) => (
           <Icon type="user" />
           <span className="nav-ingredients">Home</span>
         </Menu.Item>
+        <Menu.Item key="favorites">
+          <Icon type="star" />
+          <span className="nav-ingredients">Favorites</span>
+        </Menu.Item>
       </Menu>
     </Sider>
     <Layout>
