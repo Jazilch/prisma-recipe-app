@@ -2,20 +2,49 @@
 
 import React, { useState } from 'react';
 import { Query } from 'react-apollo';
-import { Modal } from 'antd';
 import RecipeCard from '../components/RecipeCard';
+import ModalsContainer from './ModalsContainer';
 import GetAllRecipes from '../graphql/queries/GetAllRecipes';
-import GetRecipe from '../graphql/queries/GetRecipe';
+import { formInitialState } from '../utils/stateUtils';
 
 const RecipesContainer = () => {
-  const [modalOpen, setModal] = useState(false);
   const [activeId, setActiveId] = useState(0);
-  const toggleModal = () => setModal(!modalOpen);
+  const [viewModalOpen, setViewModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [formState, setFormState] = useState(formInitialState);
+  const toggleViewModal = () => setViewModalOpen(!viewModalOpen);
+  const toggleEditModal = () => setEditModalOpen(!editModalOpen);
 
-  const handleModal = id => {
-    setModal(!modalOpen);
+  const handleViewModal = id => {
+    setViewModalOpen(!viewModalOpen);
     setActiveId(id);
   };
+
+  const handleEditModal = ({ id, directions, ingredients, title }) => {
+    setEditModalOpen(!editModalOpen);
+    setFormState({
+      form: {
+        id,
+        directions,
+        ingredients,
+        title
+      }
+    });
+  };
+
+  const handleChange = event => {
+    event.persist();
+
+    setFormState(prevState => {
+      return {
+        form: {
+          ...prevState.form,
+          [event.target.name]: event.target.value
+        }
+      };
+    });
+  };
+
   return (
     <React.Fragment>
       <Query query={GetAllRecipes}>
@@ -23,34 +52,20 @@ const RecipesContainer = () => {
           <RecipeCard
             loading={loading}
             recipes={recipes}
-            handleModal={handleModal}
+            handleViewModal={handleViewModal}
+            handleEditModal={handleEditModal}
           />
         )}
       </Query>
-      <React.Fragment>
-        {modalOpen && (
-          <Query query={GetRecipe} variables={{ recipeId: `${activeId}` }}>
-            {({ data }) => {
-              return (
-                <Modal
-                  title="Basic Modal"
-                  visible={modalOpen}
-                  onOk={toggleModal}
-                  onCancel={toggleModal}
-                >
-                  {data.recipe && (
-                    <div>
-                      <h2>{data.recipe.title}</h2>
-                      <p>{data.recipe.ingredients}</p>
-                      <p>{data.recipe.directions}</p>
-                    </div>
-                  )}
-                </Modal>
-              );
-            }}
-          </Query>
-        )}
-      </React.Fragment>
+      <ModalsContainer
+        activeId={activeId}
+        viewModalOpen={viewModalOpen}
+        toggleViewModal={toggleViewModal}
+        formState={formState}
+        handleChange={handleChange}
+        editModalOpen={editModalOpen}
+        toggleEditModal={toggleEditModal}
+      />
     </React.Fragment>
   );
 };
