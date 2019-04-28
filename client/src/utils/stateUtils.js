@@ -5,6 +5,7 @@ export const formInitialState = {
     id: '',
     title: '',
     ingredients: '',
-    directions: ''
+    directions: '',
+    published: false
   }
 };

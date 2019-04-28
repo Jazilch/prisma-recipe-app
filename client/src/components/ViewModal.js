@@ -3,12 +3,12 @@
 import React from 'react';
 import { Modal, Spin } from 'antd';
 
-const ViewModal = ({ data, loading, viewModalOpen, toggleViewModal }) => (
+const ViewModal = ({ data, loading, viewModalOpen, setViewModalOpen }) => (
   <Modal
     title={data.recipe && data.recipe.title}
     visible={viewModalOpen}
-    onOk={toggleViewModal}
-    onCancel={toggleViewModal}
+    onOk={() => setViewModalOpen(!viewModalOpen)}
+    onCancel={() => setViewModalOpen(!viewModalOpen)}
   >
     {loading && <Spin />}
     {data.recipe && (

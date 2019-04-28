@@ -10,7 +10,7 @@ const RecipeCard = ({ loading, recipes, handleViewModal, handleEditModal }) => {
       {recipes && recipes.length === 0 && <Empty />}
       {recipes &&
         recipes.map(recipe => {
-          const { id, ingredients, directions, title } = recipe;
+          const { id, ingredients, directions, title, published } = recipe;
           return (
             <Col span={6} key={id}>
               <Card
@@ -28,7 +28,8 @@ const RecipeCard = ({ loading, recipes, handleViewModal, handleEditModal }) => {
                             id,
                             directions,
                             ingredients,
-                            title
+                            title,
+                            published
                           })
                         }
                       />

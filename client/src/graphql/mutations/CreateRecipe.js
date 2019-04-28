@@ -1,15 +1,13 @@
 import { gql } from 'apollo-boost';
 
 export default gql`
-  mutation UpdateRecipe(
-    $id: ID!
+  mutation AddRecipe(
     $directions: String!
     $title: String!
     $ingredients: String!
     $published: Boolean
   ) {
-    updateRecipe(
-      where: { id: $id }
+    createRecipe(
       data: {
         directions: $directions
         title: $title

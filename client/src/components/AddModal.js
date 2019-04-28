@@ -3,7 +3,7 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
 import { Modal, Spin, Form, Input, Switch } from 'antd';
-import UpdateRecipe from '../graphql/mutations/UpdateRecipe';
+import AddRecipe from '../graphql/mutations/CreateRecipe';
 import GetAllRecipes from '../graphql/queries/GetAllRecipes';
 import {
   showSuccessNotification,
@@ -12,49 +12,48 @@ import {
 
 const formItemLayout = { labelCol: { span: 5 }, wrapperCol: { span: 14 } };
 
-const EditModal = ({
-  data,
+const AddModal = ({
   loading,
   formState,
   handleChange,
   handleChecked,
-  editModalOpen,
-  setEditModalOpen
+  addModalOpen,
+  setAddModalOpen
 }) => (
   <Mutation
-    mutation={UpdateRecipe}
+    mutation={AddRecipe}
     refetchQueries={[
       {
         query: GetAllRecipes
       }
     ]}
-    onCompleted={() => showSuccessNotification('Successfully updated recipe')}
+    onCompleted={() => showSuccessNotification('Successfully added recipe')}
     onError={() => showErrorNotification()}
   >
-    {updateRecipe => (
+    {addRecipe => (
       <Modal
-        title={data.recipe && data.recipe.title}
-        visible={editModalOpen}
+        title="Add your new recipe"
+        visible={addModalOpen}
         onOk={e => {
           e.preventDefault();
-          updateRecipe({
+          addRecipe({
             variables: {
-              id: formState.form.id,
               directions: formState.form.directions,
               ingredients: formState.form.ingredients,
               title: formState.form.title,
               published: formState.form.published
             }
           });
-          setEditModalOpen(!editModalOpen);
+          setAddModalOpen(!addModalOpen);
         }}
-        onCancel={() => setEditModalOpen(!editModalOpen)}
+        onCancel={() => setAddModalOpen(!addModalOpen)}
       >
         {loading && <Spin />}
         <Form layout="horizontal">
           <Form.Item label="Title" {...formItemLayout}>
             <Input
               value={formState.form.title}
+              placeholder="Enter your title here"
               onChange={handleChange}
               name="title"
             />
@@ -62,6 +61,7 @@ const EditModal = ({
           <Form.Item label="Ingredients" {...formItemLayout}>
             <Input.TextArea
               value={formState.form.ingredients}
+              placeholder="Enter your ingredients"
               rows={6}
               onChange={handleChange}
               name="ingredients"
@@ -70,6 +70,7 @@ const EditModal = ({
           <Form.Item label="Directions" {...formItemLayout}>
             <Input.TextArea
               value={formState.form.directions}
+              placeholder="Enter your directions"
               rows={10}
               onChange={handleChange}
               name="directions"
@@ -87,4 +88,4 @@ const EditModal = ({
   </Mutation>
 );
 
-export default EditModal;
+export default AddModal;
