@@ -6,65 +6,96 @@ import RecipeCard from '../components/RecipeCard';
 import ModalsContainer from './ModalsContainer';
 import GetAllRecipes from '../graphql/queries/GetAllRecipes';
 import { formInitialState } from '../utils/stateUtils';
+import { StyledAddButton } from '../components/style';
 
 const RecipesContainer = () => {
   const [activeId, setActiveId] = useState(0);
   const [viewModalOpen, setViewModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [addModalOpen, setAddModalOpen] = useState(false);
   const [formState, setFormState] = useState(formInitialState);
-  const toggleViewModal = () => setViewModalOpen(!viewModalOpen);
-  const toggleEditModal = () => setEditModalOpen(!editModalOpen);
 
-  const handleViewModal = id => {
-    setViewModalOpen(!viewModalOpen);
-    setActiveId(id);
+  const handleResetState = () => {
+    setFormState({ ...formInitialState });
   };
 
-  const handleEditModal = ({ id, directions, ingredients, title }) => {
+  const handleViewModal = id => {
+    setActiveId(id);
+    setViewModalOpen(!viewModalOpen);
+  };
+
+  const handleEditModal = ({
+    id,
+    directions,
+    ingredients,
+    title,
+    published
+  }) => {
     setEditModalOpen(!editModalOpen);
     setFormState({
       form: {
         id,
         directions,
         ingredients,
-        title
+        title,
+        published
       }
     });
   };
 
-  const handleChange = event => {
-    event.persist();
+  const handleAddModal = () => {
+    handleResetState();
+    setAddModalOpen(!addModalOpen);
+  };
 
-    setFormState(prevState => {
-      return {
-        form: {
-          ...prevState.form,
-          [event.target.name]: event.target.value
-        }
-      };
-    });
+  const handleInputChange = event => {
+    event.persist();
+    setFormState(prevState => ({
+      form: {
+        ...prevState.form,
+        [event.target.name]: event.target.value
+      }
+    }));
+  };
+
+  const handleChecked = checked => {
+    setFormState(prevState => ({
+      form: { ...prevState.form, published: checked }
+    }));
   };
 
   return (
     <React.Fragment>
       <Query query={GetAllRecipes}>
         {({ loading, data: { recipes } }) => (
-          <RecipeCard
-            loading={loading}
-            recipes={recipes}
-            handleViewModal={handleViewModal}
-            handleEditModal={handleEditModal}
-          />
+          <React.Fragment>
+            <RecipeCard
+              loading={loading}
+              recipes={recipes}
+              handleViewModal={handleViewModal}
+              handleEditModal={handleEditModal}
+            />
+            <StyledAddButton
+              type="primary"
+              shape="circle"
+              icon="plus"
+              size="large"
+              onClick={handleAddModal}
+            />
+          </React.Fragment>
         )}
       </Query>
       <ModalsContainer
         activeId={activeId}
-        viewModalOpen={viewModalOpen}
-        toggleViewModal={toggleViewModal}
         formState={formState}
-        handleChange={handleChange}
+        handleInputChange={handleInputChange}
+        handleChecked={handleChecked}
+        viewModalOpen={viewModalOpen}
         editModalOpen={editModalOpen}
-        toggleEditModal={toggleEditModal}
+        addModalOpen={addModalOpen}
+        setViewModalOpen={setViewModalOpen}
+        setEditModalOpen={setEditModalOpen}
+        setAddModalOpen={setAddModalOpen}
       />
     </React.Fragment>
   );

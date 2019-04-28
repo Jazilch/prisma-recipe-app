@@ -4,16 +4,20 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import ViewModal from '../components/ViewModal';
 import EditModal from '../components/EditModal';
+import AddModal from '../components/AddModal';
 import GetRecipe from '../graphql/queries/GetRecipe';
 
 const ModalsContainer = ({
   activeId,
-  viewModalOpen,
-  toggleViewModal,
   formState,
-  handleChange,
+  handleInputChange,
+  handleChecked,
+  viewModalOpen,
   editModalOpen,
-  toggleEditModal
+  addModalOpen,
+  setViewModalOpen,
+  setEditModalOpen,
+  setAddModalOpen
 }) => (
   <Query query={GetRecipe} variables={{ recipeId: `${activeId}` }}>
     {({ data, loading }) => (
@@ -22,15 +26,24 @@ const ModalsContainer = ({
           data={data}
           loading={loading}
           viewModalOpen={viewModalOpen}
-          toggleViewModal={toggleViewModal}
+          setViewModalOpen={setViewModalOpen}
         />
         <EditModal
           data={data}
           loading={loading}
           formState={formState}
-          handleChange={handleChange}
+          handleInputChange={handleInputChange}
+          handleChecked={handleChecked}
           editModalOpen={editModalOpen}
-          toggleEditModal={toggleEditModal}
+          setEditModalOpen={setEditModalOpen}
+        />
+        <AddModal
+          loading={loading}
+          formState={formState}
+          handleInputChange={handleInputChange}
+          handleChecked={handleChecked}
+          addModalOpen={addModalOpen}
+          setAddModalOpen={setAddModalOpen}
         />
       </React.Fragment>
     )}

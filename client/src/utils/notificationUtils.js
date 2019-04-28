@@ -2,8 +2,8 @@
 
 import { message } from 'antd';
 
-export const showSuccessNotification = () =>
-  message.success('Successfully updated recipe');
+export const showSuccessNotification = successMessage =>
+  message.success(`${successMessage}`);
 
 export const showErrorNotification = () =>
-  message.error("Something went wrong! Couldn't update recipe");
+  message.error('Something went wrong!');
