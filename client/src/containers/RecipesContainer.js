@@ -64,6 +64,24 @@ const RecipesContainer = () => {
     }));
   };
 
+  const handleDeletePopup = ({
+    id,
+    directions,
+    ingredients,
+    title,
+    published
+  }) => {
+    setFormState({
+      form: {
+        id,
+        directions,
+        ingredients,
+        title,
+        published
+      }
+    });
+  };
+
   return (
     <React.Fragment>
       <Query query={GetAllRecipes}>
@@ -72,8 +90,10 @@ const RecipesContainer = () => {
             <RecipeCard
               loading={loading}
               recipes={recipes}
+              formState={formState}
               handleViewModal={handleViewModal}
               handleEditModal={handleEditModal}
+              handleDeletePopup={handleDeletePopup}
             />
             <StyledAddButton
               type="primary"
