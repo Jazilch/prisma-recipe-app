@@ -5,9 +5,10 @@ import { Mutation } from 'react-apollo';
 import { Icon, Popconfirm } from 'antd';
 import UpdateRecipe from '../graphql/mutations/UpdateRecipe';
 import GetAllRecipes from '../graphql/queries/GetAllRecipes';
+import { FavoriteIcon } from './style';
 
 const CardIcons = ({
-  recipe: { id, directions, ingredients, title, published },
+  recipe: { id, directions, ingredients, title, published, favorited },
   formState,
   handleEditModal,
   handleDeletePopup
@@ -23,6 +24,23 @@ const CardIcons = ({
     {updateRecipe => (
       <React.Fragment>
         <span>
+          <FavoriteIcon
+            type="star"
+            theme={favorited ? 'filled' : 'twoTone'}
+            twoToneColor="#f39140"
+            onClick={() => {
+              updateRecipe({
+                variables: {
+                  id,
+                  directions,
+                  ingredients,
+                  title,
+                  published,
+                  favorited: !favorited
+                }
+              });
+            }}
+          />
           <Icon
             type="edit"
             style={{ color: '#08c' }}
@@ -63,6 +81,7 @@ const CardIcons = ({
             <Icon
               type="delete"
               theme="twoTone"
+              twoToneColor="#CC4400"
               style={{ marginLeft: '12px' }}
             />
           </Popconfirm>

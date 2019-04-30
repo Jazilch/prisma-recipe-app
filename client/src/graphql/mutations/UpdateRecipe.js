@@ -7,6 +7,7 @@ export default gql`
     $title: String!
     $ingredients: String!
     $published: Boolean
+    $favorited: Boolean
   ) {
     updateRecipe(
       where: { id: $id }
@@ -15,6 +16,7 @@ export default gql`
         title: $title
         ingredients: $ingredients
         published: $published
+        favorited: $favorited
       }
     ) {
       id

@@ -9,6 +9,7 @@ export default gql`
       ingredients
       directions
       published
+      favorited
     }
   }
 `;

@@ -69,7 +69,8 @@ const RecipesContainer = () => {
     directions,
     ingredients,
     title,
-    published
+    published,
+    favorited
   }) => {
     setFormState({
       form: {
@@ -77,7 +78,8 @@ const RecipesContainer = () => {
         directions,
         ingredients,
         title,
-        published
+        published,
+        favorited
       }
     });
   };

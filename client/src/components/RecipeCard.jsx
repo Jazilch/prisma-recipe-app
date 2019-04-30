@@ -1,10 +1,8 @@
 'use es6';
 
 import React from 'react';
-import { Card, Col, Row, Empty, Spin, Button, Icon } from 'antd';
+import { Card, Col, Row, Empty, Spin, Button } from 'antd';
 import CardIcons from './CardIcons';
-
-Icon.setTwoToneColor('#CC4400');
 
 const RecipeCard = ({
   loading,
@@ -23,10 +21,11 @@ const RecipeCard = ({
           recipes.map(recipe => {
             const { id, ingredients, directions, title } = recipe;
             return (
-              <Col span={6} key={id}>
+              <Col span={8} key={id}>
                 <Card
                   key={id}
                   style={{ background: '#fff' }}
+                  headStyle={{ display: 'block' }}
                   title={title}
                   extra={
                     <CardIcons
@@ -54,8 +53,6 @@ const RecipeCard = ({
             );
           })}
       </React.Fragment>
-      {/* )}
-      </Mutation> */}
     </Row>
   );
 };

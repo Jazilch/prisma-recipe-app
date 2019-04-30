@@ -56,6 +56,7 @@ type Recipe {
   ingredients: String!
   directions: String!
   published: Boolean!
+  favorited: Boolean!
 }
 
 type RecipeConnection {
@@ -69,6 +70,7 @@ input RecipeCreateInput {
   ingredients: String!
   directions: String!
   published: Boolean
+  favorited: Boolean
 }
 
 type RecipeEdge {
@@ -91,6 +93,8 @@ enum RecipeOrderByInput {
   directions_DESC
   published_ASC
   published_DESC
+  favorited_ASC
+  favorited_DESC
 }
 
 type RecipePreviousValues {
@@ -101,6 +105,7 @@ type RecipePreviousValues {
   ingredients: String!
   directions: String!
   published: Boolean!
+  favorited: Boolean!
 }
 
 type RecipeSubscriptionPayload {
@@ -126,6 +131,7 @@ input RecipeUpdateInput {
   ingredients: String
   directions: String
   published: Boolean
+  favorited: Boolean
 }
 
 input RecipeUpdateManyMutationInput {
@@ -133,6 +139,7 @@ input RecipeUpdateManyMutationInput {
   ingredients: String
   directions: String
   published: Boolean
+  favorited: Boolean
 }
 
 input RecipeWhereInput {
@@ -210,6 +217,8 @@ input RecipeWhereInput {
   directions_not_ends_with: String
   published: Boolean
   published_not: Boolean
+  favorited: Boolean
+  favorited_not: Boolean
   AND: [RecipeWhereInput!]
   OR: [RecipeWhereInput!]
   NOT: [RecipeWhereInput!]
