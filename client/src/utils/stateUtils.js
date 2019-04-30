@@ -6,6 +6,7 @@ export const formInitialState = {
     title: '',
     ingredients: '',
     directions: '',
-    published: false
+    published: false,
+    favorited: false
   }
 };

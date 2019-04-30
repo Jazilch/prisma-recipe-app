@@ -6,4 +6,5 @@ type Recipe {
   ingredients: String!
   directions: String!
   published: Boolean! @default(value: "false")
+  favorited: Boolean! @default(value: "false")
 }

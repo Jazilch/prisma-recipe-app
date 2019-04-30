@@ -117,7 +117,9 @@ export type RecipeOrderByInput =
   | "directions_ASC"
   | "directions_DESC"
   | "published_ASC"
-  | "published_DESC";
+  | "published_DESC"
+  | "favorited_ASC"
+  | "favorited_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -126,6 +128,7 @@ export interface RecipeCreateInput {
   ingredients: String;
   directions: String;
   published?: Boolean;
+  favorited?: Boolean;
 }
 
 export interface RecipeWhereInput {
@@ -203,6 +206,8 @@ export interface RecipeWhereInput {
   directions_not_ends_with?: String;
   published?: Boolean;
   published_not?: Boolean;
+  favorited?: Boolean;
+  favorited_not?: Boolean;
   AND?: RecipeWhereInput[] | RecipeWhereInput;
   OR?: RecipeWhereInput[] | RecipeWhereInput;
   NOT?: RecipeWhereInput[] | RecipeWhereInput;
@@ -213,6 +218,7 @@ export interface RecipeUpdateInput {
   ingredients?: String;
   directions?: String;
   published?: Boolean;
+  favorited?: Boolean;
 }
 
 export interface RecipeUpdateManyMutationInput {
@@ -220,6 +226,7 @@ export interface RecipeUpdateManyMutationInput {
   ingredients?: String;
   directions?: String;
   published?: Boolean;
+  favorited?: Boolean;
 }
 
 export interface RecipeSubscriptionWhereInput {
@@ -267,6 +274,7 @@ export interface RecipePreviousValues {
   ingredients: String;
   directions: String;
   published: Boolean;
+  favorited: Boolean;
 }
 
 export interface RecipePreviousValuesPromise
@@ -279,6 +287,7 @@ export interface RecipePreviousValuesPromise
   ingredients: () => Promise<String>;
   directions: () => Promise<String>;
   published: () => Promise<Boolean>;
+  favorited: () => Promise<Boolean>;
 }
 
 export interface RecipePreviousValuesSubscription
@@ -291,6 +300,7 @@ export interface RecipePreviousValuesSubscription
   ingredients: () => Promise<AsyncIterator<String>>;
   directions: () => Promise<AsyncIterator<String>>;
   published: () => Promise<AsyncIterator<Boolean>>;
+  favorited: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface PageInfo {
@@ -381,6 +391,7 @@ export interface Recipe {
   ingredients: String;
   directions: String;
   published: Boolean;
+  favorited: Boolean;
 }
 
 export interface RecipePromise extends Promise<Recipe>, Fragmentable {
@@ -391,6 +402,7 @@ export interface RecipePromise extends Promise<Recipe>, Fragmentable {
   ingredients: () => Promise<String>;
   directions: () => Promise<String>;
   published: () => Promise<Boolean>;
+  favorited: () => Promise<Boolean>;
 }
 
 export interface RecipeSubscription
@@ -403,6 +415,7 @@ export interface RecipeSubscription
   ingredients: () => Promise<AsyncIterator<String>>;
   directions: () => Promise<AsyncIterator<String>>;
   published: () => Promise<AsyncIterator<Boolean>>;
+  favorited: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface RecipeConnection {
